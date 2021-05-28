@@ -1,0 +1,16 @@
+Name,Health,Damage
+Slime,10,3
+Goblin,14,4
+Kobold,13,4
+Troll,20,5
+Orc,16,7
+Ogre,14,6
+Skeleton,8,3
+Zombie,8,4
+Bat,6,2
+Lich,30,8
+Two-Headed-Ogre,40,12
+Goblin Priest,15,20
+Orc Chieftan,30,14
+Burning Slime,60,15
+
