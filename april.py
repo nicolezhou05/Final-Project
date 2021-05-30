@@ -5,14 +5,14 @@ enemyycord = 500
 enemyxcordchange = 0 
 
 #determine if collided
-def collided (monsterx, monstery, playerx, playery):
-    distance = ((monsterx - playerx)**2 + (monstery - playery)**2)**0.5
+def collided (monsterxcord, monsterycord, playerxcord, playerycord):
+    distance = ((monsterxcord - playerxcord)**2 + (monsterycord - playerycord)**2)**0.5
     if distance < 54:
         return True
     else:
         return False
     
-collision = collided(monsterx, monstery, playerx, playery)
+collision = collided(monsterxcord, monsterycord, playerxcord, playerycord)
 
 # if collision:
 # monster image turn highlighted
