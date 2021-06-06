@@ -1,15 +1,19 @@
 body {
-  background-color: #D1D2D2;
+  background-color: 	#c0c0c0;
 }
 
 h3,
 nav {
-  background-color: #DEE1E3;
+  background-color: #b0c4de;
 }
 
 ul {
   list-style-type: none;
   padding-left: 0;
+}
+
+a {
+  text-decoration: none;
 }
 
 a.active {
