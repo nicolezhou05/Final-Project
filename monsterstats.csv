@@ -1,15 +1,15 @@
-Name,Health,Damage
-Slime,10,3
-Goblin,14,4
-Kobold,13,4
-Troll,20,5
-Orc,16,7
-Ogre,14,6
-Skeleton,8,3
-Zombie,8,4
-Bat,6,2
-Lich,30,8
-Two-Headed-Ogre,40,12
-Goblin Priest,15,20
-Orc Chieftan,30,14
-Burning Slime,60,15
+Name,Health,Damage,Image
+Slime,10,3,slime.png
+Goblin,14,4,goblin.png
+Kobold,13,4,kobold.png
+Troll,20,5,troll.png
+Orc,16,7,orc.png
+Ogre,14,6,ogre.png
+Skeleton,8,3,skeleton.png
+Zombie,8,4,zombie,png
+Bat,6,2,bat.png
+Lich,30,8,lich.png
+Two-Headed-Ogre,40,12,two_headed_ogre.png
+Goblin Priest,15,20,goblin_priest.png
+Orc Chieftan,30,14,orc_chieftan.png
+Burning Slime,60,15,burning_slime.png
