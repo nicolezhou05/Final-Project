@@ -1,17 +1,26 @@
 body {
-  background-color: #dcdcdc;
-}
-
-h3,
-nav {
-  background-color: #e6e6fa;
+  background-color: #d3d3d3;
 }
 
 ul {
   list-style-type: none;
-  padding-left: 10;
+  padding: 0;
+  background-color: #dcdcdc;
 }
 
-a.active {
-  font-weight: bold;
+li a {
+  display: block;
+  color: #000000;
+  text-decoration: none;
+  padding: 7px 15px;
+}
+
+li a.active {
+  background-color: #808080;
+  color: #ffffff;
+}
+
+li a:hover:not(.active) {
+  background-color: #c0c0c0;
+  color: #000000;
 }
