@@ -1,6 +1,7 @@
 import pygame
 import random
 from pprint import pprint
+
 #Colors
 white = (255,255,255)
 green = (0, 255, 0)
@@ -116,6 +117,11 @@ def make_levels(dictionary, levels):
         answer[levels[order]] = temp_dict
         temp_dict = {}
         order += 1
+    i = 0
+    while i < 3:
+        temp_dict[monster_list[15]] = dictionary[monster_list[15]]
+        i += 1
+    answer[6] = temp_dict
     return answer
     
 levels = [1,2,3,4,5]
@@ -184,7 +190,6 @@ def door(x, y):
 def attack(attackedhealth, attacker_attackstat):
     if (monstercollision1 == True) or (monstercollision2 == True) or (monstercollision3 == True):
         attackedhealth -= attacker_attackstat
-        print("attack")
     
 #Text
 font = pygame.font.Font('freesansbold.ttf', 16)
@@ -198,15 +203,15 @@ def show_health(x,y):
     
 def show_monsterhealth1(x,y):
     monsterhealthdisplay1 = font.render(str(monsterhealth1),True,black)
-    screen.blit(monsterhealthdisplay1, (x, y))
+    screen.blit(monsterhealthdisplay1, (x - 15, y))
     
 def show_monsterhealth2(x,y):
     monsterhealthdisplay2 = font.render(str(monsterhealth2),True,black)
-    screen.blit(monsterhealthdisplay2, (x, y))
+    screen.blit(monsterhealthdisplay2, (x - 15, y))
 
 def show_monsterhealth3(x,y):
     monsterhealthdisplay3 = font.render(str(monsterhealth3),True,black)
-    screen.blit(monsterhealthdisplay3, (x, y))
+    screen.blit(monsterhealthdisplay3, (x - 15, y))
 
 #Game Loop
 active = True
@@ -241,7 +246,6 @@ while active:
                     attack(monsterhealth3, plyrattack)
                     monsterhealth3 -= plyrattack
      
-    #add while loop before screen fill. have list/dictioanry to refer to new monsters. list within list for order 0 equal to all monsters in first floor and order 2 to have list of all monsters in 3rd floor and then spawn in corresponding mosnters
     screen.fill(gray)
     monstersdead = 0
 
@@ -284,8 +288,12 @@ while active:
         plyrattack += 50
         level += 1
         
+        if level == 7:
+            pygame.display.quit()
+            active = False
+            quit()
+            
         #Monster Setups
-        
         monsteravatar1 = pygame.image.load(monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Image'])
         monsteravatar1 = pygame.transform.scale(monsteravatar1, (60,55))
         monsterxcord1 = random.choice(randomlist(200, 700))
@@ -293,27 +301,31 @@ while active:
         monsterhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
         monstermaxhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
         monsterdamage1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Damage']
+        
+        if level != 6:
+            monsteravatar2 = pygame.image.load(monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Image'])
+            monsteravatar2 = pygame.transform.scale(monsteravatar2, (60,55))
+            monsterxcord2 = random.choice(randomlist(200, 700))
+            monsterycord2 = random.choice(randomlist(100, 500))
+            monsterhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
+            monstermaxhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
+            monsterdamage2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Damage']
 
-        monsteravatar2 = pygame.image.load(monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Image'])
-        monsteravatar2 = pygame.transform.scale(monsteravatar2, (60,55))
-        monsterxcord2 = random.choice(randomlist(200, 700))
-        monsterycord2 = random.choice(randomlist(100, 500))
-        monsterhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
-        monstermaxhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
-        monsterdamage2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Damage']
-
-        monsteravatar3 = pygame.image.load(monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Image'])
-        monsteravatar3 = pygame.transform.scale(monsteravatar3, (60,55))
-        monsterxcord3 = random.choice(randomlist(200, 700))
-        monsterycord3 = random.choice(randomlist(100, 500))
-        monsterhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
-        monstermaxhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
-        monsterdamage3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Damage']
+            monsteravatar3 = pygame.image.load(monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Image'])
+            monsteravatar3 = pygame.transform.scale(monsteravatar3, (60,55))
+            monsterxcord3 = random.choice(randomlist(200, 700))
+            monsterycord3 = random.choice(randomlist(100, 500))
+            monsterhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
+            monstermaxhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
+            monsterdamage3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Damage']
         
     if monsterhealth1 <= 0:
         monsterxcord1 += 1000
         monsterycord1 += 1000
         monstersdead += 1
+        if level == 6:
+            endmessage = font.render(("Game Finished. Please exit."),True,black)
+            screen.blit(endmessage, (400, 300))
 
     if monsterhealth2 <= 0:
         monsterxcord2 += 1000
@@ -354,4 +366,4 @@ while active:
             
         
             
-      
+            
