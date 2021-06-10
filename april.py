@@ -27,20 +27,22 @@ plyrycord = 300
 plyrhealth = 100
 plyrmaxhealth = 100
 plyrattack = 5
-plyrdefend = 10
 
 def player(x,y):
     screen.blit(playeravatar, (x,y))
 
 #determine if collided
-def collided (monsterxcord, monsterycord, playerxcord, playerycord):
-    distance = ((monsterxcord - plyrxcord)**2 + (monsterycord - plyrycord)**2)**0.5
+def collided (monsterxcord1, monsterycord1, playerxcord, playerycord):
+    distance = ((monsterxcord1 - plyrxcord)**2 + (monsterycord1 - plyrycord)**2)**0.5
     if distance < 54:
         return True
     else:
         return False
 
-#Monsters
+level = 1
+monstersdead = 0
+
+#Monsters dictionary
 monsterstats_file = open('monsterstats.csv')
 monsterstats_text = monsterstats_file.read()
 
@@ -65,7 +67,10 @@ def make_monster_dict(data):
         sub_list = []
         order = 1
         while order < len(data[0]):
-            sub_list.append(x[order])
+            if order < len(data[0])-1:
+                sub_list.append(int(x[order]))
+            else:
+                sub_list.append(x[order])
             order += 1
         d[y] = sub_list
     return d
@@ -116,7 +121,7 @@ def make_levels(dictionary, levels):
 levels = [1,2,3,4,5]
 monsterstats = make_levels(monster_combine, levels)
 
-#monster
+#Monsters
 def randomlist(minimum, maximum):
     answer = []
     order = minimum
@@ -125,10 +130,10 @@ def randomlist(minimum, maximum):
         order += 1
     return answer
 
-monsteravatar = pygame.image.load('ogre.png')
-monsteravatar = pygame.transform.scale(monsteravatar, (60,55))
-xcord = random.choice(randomlist(150, 720))
-ycord = random.choice(randomlist(50, 550))
+monsteravatar1 = pygame.image.load(monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Image'])
+monsteravatar1 = pygame.transform.scale(monsteravatar1, (60,55))
+xcord = random.choice(randomlist(200, 700))
+ycord = random.choice(randomlist(100, 500))
 #make sure ogres don't spawn in same area 
 #    collide = True
 #    while collide == True:
@@ -136,15 +141,36 @@ ycord = random.choice(randomlist(50, 550))
 #            if xcord = ogrexcord[x] 
 #        xcord = random.choice(randomlist(150, 720))
 #        ycord = random.choice(randomlist(50, 550))
-monsterxcord = xcord
-monsterycord = xcord
-monsterxcordchange = 0
-monsterycordchange = 0
-monsterhealth = 10
-monstermaxhealth = 10
+monsterxcord1 = xcord
+monsterycord1 = xcord
+monsterxcordchange1 = 0
+monsterycordchange1 = 0
+monsterhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
+monstermaxhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
+monsterdamage1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Damage']
+
+monsteravatar2 = pygame.image.load(monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Image'])
+monsteravatar2 = pygame.transform.scale(monsteravatar2, (60,55))
+monsterxcord2 = random.choice(randomlist(200, 700))
+monsterycord2 = random.choice(randomlist(100, 500))
+monsterxcordchange2 = 0
+monsterycordchange2 = 0
+monsterhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
+monstermaxhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
+monsterdamage2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Damage']
+
+monsteravatar3 = pygame.image.load(monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Image'])
+monsteravatar3 = pygame.transform.scale(monsteravatar3, (60,55))
+monsterxcord3 = random.choice(randomlist(200, 700))
+monsterycord3 = random.choice(randomlist(100, 500))
+monsterxcordchange3 = 0
+monsterycordchange3 = 0
+monsterhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
+monstermaxhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
+monsterdamage3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Damage']
 
 def monster(avatar, x, y):
-    screen.blit(monsteravatar, (x,y))
+    screen.blit(avatar, (x,y))
     
 #Door 
 dooravatar = pygame.image.load('door.png')
@@ -156,17 +182,10 @@ def door(x, y):
     screen.blit(dooravatar, (x,y))
     
 def attack(attackedhealth, attacker_attackstat):
-    if monstercollision == True and defend != True:
+    if (monstercollision1 == True) or (monstercollision2 == True) or (monstercollision3 == True):
         attackedhealth -= attacker_attackstat
         print("attack")
-        
-
-def defend():
-    if monstercollision == True:
-        defend = True 
-        print("defend")
     
-
 #Text
 font = pygame.font.Font('freesansbold.ttf', 16)
 smallfont = pygame.font.Font('freesansbold.ttf',8)
@@ -176,12 +195,18 @@ healthy = 10
 def show_health(x,y):
     health = font.render("Health:" + str(plyrhealth) + '/' + str(plyrmaxhealth),True, black)
     screen.blit(health, (x, y))
-def show_monsterhealth(x,y):
-    monsterhealthdisplay = font.render(str(monsterhealth),True,black)
-    screen.blit(monsterhealthdisplay, (x, y))
+    
+def show_monsterhealth1(x,y):
+    monsterhealthdisplay1 = font.render(str(monsterhealth1),True,black)
+    screen.blit(monsterhealthdisplay1, (x, y))
+    
+def show_monsterhealth2(x,y):
+    monsterhealthdisplay2 = font.render(str(monsterhealth2),True,black)
+    screen.blit(monsterhealthdisplay2, (x, y))
 
-level = 1
-monstersdead = 0
+def show_monsterhealth3(x,y):
+    monsterhealthdisplay3 = font.render(str(monsterhealth3),True,black)
+    screen.blit(monsterhealthdisplay3, (x, y))
 
 #Game Loop
 active = True
@@ -204,10 +229,17 @@ while active:
                 plyrycord += 50
         #Player attack
             if event.key == pygame.K_a:
-                attack(monsterhealth, plyrattack)
-                monsterhealth -= plyrattack
-            if event.key == pygame.K_d:
-                defend()
+                print(monstersdead)
+                print(level)
+                if monstercollision1 == True:
+                    attack(monsterhealth1, plyrattack)
+                    monsterhealth1 -= plyrattack
+                if monstercollision2 == True:
+                    attack(monsterhealth2, plyrattack)
+                    monsterhealth2 -= plyrattack
+                if monstercollision3 == True:
+                    attack(monsterhealth3, plyrattack)
+                    monsterhealth3 -= plyrattack
      
     #add while loop before screen fill. have list/dictioanry to refer to new monsters. list within list for order 0 equal to all monsters in first floor and order 2 to have list of all monsters in 3rd floor and then spawn in corresponding mosnters
     screen.fill(gray)
@@ -223,55 +255,103 @@ while active:
     if plyrycord >= 546:
         plyrycord = 544
     
-    monsterxcord += monsterxcordchange
+    monsterxcord1 += monsterxcordchange1
+    monsterxcord2 += monsterxcordchange2
+    monsterxcord3 += monsterxcordchange3
+
     
     #monster boundaries
-    if -50 >= monsterxcord <= 0:
-        monsterxcord = 1
-    if 800 >= monsterxcord >= 740:
-        monsterxcord = 739
-    if -50 >= monsterycord <= 0:
-        monsterycord = 1
-    if 600 >= monsterycord >= 546:
-        monsterycord = 544
+    if -50 >= monsterxcord1 <= 0:
+        monsterxcord1 = 1
+    if 800 >= monsterxcord1 >= 740:
+        monsterxcord1 = 739
+    if -50 >= monsterycord1 <= 0:
+        monsterycord1 = 1
+    if 600 >= monsterycord1 >= 546:
+        monsterycord1 = 544
     
     #Collision
-    monstercollision = collided(monsterxcord, monsterycord, plyrxcord, plyrycord)
+    monstercollision1 = collided(monsterxcord1, monsterycord1, plyrxcord, plyrycord)
+    monstercollision2 = collided(monsterxcord2, monsterycord2, plyrxcord, plyrycord)
+    monstercollision3 = collided(monsterxcord3, monsterycord3, plyrxcord, plyrycord)
         
     doorcollision = collided(doorxcord, doorycord, plyrxcord, plyrycord) 
     if doorcollision == True:
         plyrxcord = 75
         plyrycord = 300
-        plyrmaxhealth += 100
+        plyrmaxhealth += 50
+        plyrhealth += 50
         plyrattack += 50
-        plyrdefend += 50
         level += 1
-    
-    if monsterhealth <= 0:
-        monsterxcord += 1000
-        monsterycord += 1000
+        
+        #Monster Setups
+        
+        monsteravatar1 = pygame.image.load(monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Image'])
+        monsteravatar1 = pygame.transform.scale(monsteravatar1, (60,55))
+        monsterxcord1 = random.choice(randomlist(200, 700))
+        monsterycord1 = random.choice(randomlist(100, 500))
+        monsterhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
+        monstermaxhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
+        monsterdamage1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Damage']
+
+        monsteravatar2 = pygame.image.load(monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Image'])
+        monsteravatar2 = pygame.transform.scale(monsteravatar2, (60,55))
+        monsterxcord2 = random.choice(randomlist(200, 700))
+        monsterycord2 = random.choice(randomlist(100, 500))
+        monsterhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
+        monstermaxhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
+        monsterdamage2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Damage']
+
+        monsteravatar3 = pygame.image.load(monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Image'])
+        monsteravatar3 = pygame.transform.scale(monsteravatar3, (60,55))
+        monsterxcord3 = random.choice(randomlist(200, 700))
+        monsterycord3 = random.choice(randomlist(100, 500))
+        monsterhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
+        monstermaxhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
+        monsterdamage3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Damage']
+        
+    if monsterhealth1 <= 0:
+        monsterxcord1 += 1000
+        monsterycord1 += 1000
+        monstersdead += 1
+
+    if monsterhealth2 <= 0:
+        monsterxcord2 += 1000
+        monsterycord2 += 1000
+        monstersdead += 1
+
+    if monsterhealth3 <= 0:
+        monsterxcord3 += 1000
+        monsterycord3 += 1000
         monstersdead += 1 
-        
-        
     
 #    if collision == True:
 #        monster = 0
         # monster image turn highlighted
         # if player hit monster take damage
-        # randomize monster hit or defend
         
     #chatlogs
     pygame.font.init
     pygame.font.quit
-    show_monsterhealth(monsterxcord,monsterycord)
+    show_monsterhealth1(monsterxcord1,monsterycord1)
+    show_monsterhealth2(monsterxcord2,monsterycord2)
+    show_monsterhealth3(monsterxcord3,monsterycord3)
+
     show_health(healthx, healthy)
         
     player(plyrxcord,plyrycord)
-    monster(monsterstats[level][monster_list[0]], monsterxcord, monsterycord)
+    monster(monsteravatar1, monsterxcord1, monsterycord1)
+    monster(monsteravatar2, monsterxcord2, monsterycord2)
+    monster(monsteravatar3, monsterxcord3, monsterycord3)
 
-    if monstersdead == level * 1:
+    if monstersdead == 3:
         door(doorxcord, doorycord)
     pygame.display.update()
     if plyrhealth > plyrmaxhealth:
         plyrhealth = plyrmaxhealth
         
+     
+            
+        
+            
+      
