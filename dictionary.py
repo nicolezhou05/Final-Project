@@ -81,6 +81,24 @@ def make_levels2(dictionary, levels):
     print(monster_list)
     temp_dict = {}
     order = 0
+    while order < len(dictionary[monster_list[0]]):
+        temp_dict[monster_list[order]] = dictionary[monster_list[order]]
+        for x in levels:
+            answer[x] = temp_dict
+        order += 1
+    return answer
+    
+levels = [1,2,3,4]
+pprint(make_levels2(monster_combine, levels))
+
+def make_levels3(dictionary, levels):
+    answer = {}
+    monster_list = []
+    for x in monster_data:
+        monster_list.append(x[0])
+    print(monster_list)
+    temp_dict = {}
+    order = 0
     i = 0
     while order < len(levels):
         while i < 3:
@@ -93,6 +111,4 @@ def make_levels2(dictionary, levels):
     return answer
     
 levels = [1,2,3,4]
-pprint(make_levels2(monster_combine, levels))
-    
-    
+pprint(make_levels3(monster_combine, levels))
