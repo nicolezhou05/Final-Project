@@ -1,4 +1,5 @@
 Name,Health,Damage,Image
+Fill-In,1,1,monster.png
 Slime,10,3,slime.png
 Goblin,14,4,goblin.png
 Kobold,13,4,kobold.png
