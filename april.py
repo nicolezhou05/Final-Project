@@ -234,8 +234,6 @@ while active:
                 plyrycord += 50
         #Player attack
             if event.key == pygame.K_a:
-                print(monstersdead)
-                print(level)
                 if monstercollision1 == True:
                     attack(monsterhealth1, plyrattack)
                     monsterhealth1 -= plyrattack
@@ -263,7 +261,6 @@ while active:
     monsterxcord2 += monsterxcordchange2
     monsterxcord3 += monsterxcordchange3
 
-    
     #monster boundaries
     if -50 >= monsterxcord1 <= 0:
         monsterxcord1 = 1
