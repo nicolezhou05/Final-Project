@@ -8,10 +8,10 @@ Kobold,13,4,30,kobold.png
 Troll,24,8,15,troll.png
 Orc,26,7,30,orc.png
 Ogre,32,9,45,ogre.png
-Two-Headed-Ogre,40,12,30,two_headed_ogre.png
+Two Headed Ogre,40,12,30,two_headed_ogre.png
 Goblin Priest,35,20,45,goblin_priest.png
 Orc Chieftan,45,14,40,orc_chieftan.png
 Lich,55,8,20,lich.png
-Reaper,50,20,25,grim-reaper.png
+Reaper,50,20,25,grim_reaper.png
 Burning Slime,60,15,40,burning_slime.png
 Dragon,100,20,60,dragon.png
