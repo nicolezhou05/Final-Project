@@ -1,17 +1,17 @@
-Name,Health,Damage,Speed,Image,AttackImage
-Skeleton,12,6,40,skeleton.png,archery.png
-Zombie,11,4,10,zombie.png,fangs.png
-Bat,10,3,40,bat.png,fangs.png
-Slime,12,3,15,slime.png,blob.png
-Goblin,14,4,45,goblin.png,dagger.png
-Kobold,13,4,30,kobold.png,dagger.png
-Troll,24,8,15,troll.png,mace.png
-Orc,26,7,30,orc.png,mace.png
-Ogre,32,9,45,ogre.png,mace.png
-Two-Headed-Ogre,40,12,30,two_headed_ogre.png,mace.png
-Goblin Priest,35,20,45,goblin_priest.png,fireball.png
-Orc Chieftan,45,14,40,orc_chieftan.png,mace.png
-Lich,55,8,20,lich.png,fireball.png
-Reaper,50,20,25,grim-reaper.png,scythe.png
-Burning Slime,60,15,40,burning_slime.png,fireball.png
-Dragon,100,20,60,dragon.png,fire.png
+Name,Health,Damage,Speed,Image
+Skeleton,12,6,40,skeleton.png
+Zombie,11,4,10,zombie.png
+Bat,10,3,40,bat.png
+Slime,12,3,15,slime.png
+Goblin,14,4,45,goblin.png
+Kobold,13,4,30,kobold.png
+Troll,24,8,15,troll.png
+Orc,26,7,30,orc.png
+Ogre,32,9,45,ogre.png
+Two-Headed-Ogre,40,12,30,two_headed_ogre.png
+Goblin Priest,35,20,45,goblin_priest.png
+Orc Chieftan,45,14,40,orc_chieftan.png
+Lich,55,8,20,lich.png
+Reaper,50,20,25,grim-reaper.png
+Burning Slime,60,15,40,burning_slime.png
+Dragon,100,20,60,dragon.png
