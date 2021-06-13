@@ -13,29 +13,58 @@
     <hr>
     
     <h3>Project Description</h3>
-    <p>This is a game in which the player tries to defeat monsters and go onto the next level.</p>
+    <p>Our project is a game where you have to defeat all the monsters in the room until you defeat the final boss and win.</p>
     
     <h3>Instructions</h3>
-    <p>***(fill in the instructions)***</p>
+    <p>Download the zip file and open the python file. To play the game, click the green triangle to run the current script. Use the arrow keys to move left, right, up, and down. Use the 'a' key to attack the monsters when the two collide. 3 monsters will spawn in random locations in each level, except for the last level, following the players movement while attacking them when they collide. When the players health is under 15, a health potion will spawn which will recover some of the players' health when they collide. After all monsters in the level are killed, a portal will spawn and after the player collides with the door, the player is taken to the next level. In the last level, there is only one monster, the dragon, to kill and after the dragon is killed the game is over. </p>
     
     <h3>How it works</h3>
-    <p>***(fill in how the program work)***</p>
+    <p>The game is first initialized and displayed using pygame code. The player is formed using screen.blit.
+    
+    All the monster stats and pngs are stored within a csv file. The csv file is transformed into a dictionary within a dictionary within a dictionary. The csv is first formed into lists everytime there is a new line. Then the first term of each of the lists are made the key of a dictionary, the rest of the list becoming the value of their corresponding first term of the list. Then the values of the dictionary become dictionaries where the headers become the value and the corresponding list numbers become the values. Then the entire dictionary is broken up in another dictionary, separating every 3 monsters into one level. Each key represents a level while the values are the dictionaries of 3 monsters. The next three monsters are in the next level. The dragon has its own level at 6.
+    monster_list forms a list in chronological order of levels.
+      
+    There are monster1, monster2, monster3 formed on each level except the last that changes based on each level. monsterstats[level] will make the program look for the dictionaries of the monsters able to formed for the corresponding level. Then using monster_list, the string of the 
+      
+    </p>
     
     <h3>Files</h3>
     <ul>
       <li>final.html: This html file</li>
       <li>website.css: The css file used to style final.html</li>
-      <li>***(file)***: ***(brief description of the file's purpose)***</li>
-      <li>***(file)***: ***(brief description of the file's purpose)***</li>
+      <li>final_project.py: The python function that contains the code of the game and where you can play the gameit</li>
+      <li>monsterstats.csv: The csv file containing the stats and pngs of all the monsters in the game</li>
+      <li>Images:</li>
+      <ul>
+        <li>portal.png: The png of the portal</li>
+        <li>health_potion.png: The png of the health potion</li>
+        <li>skeleton.png: The png of the skeleton</li>
+        <li>zombie.png: The png of the zombie</li>
+        <li>bat.png: The png of the bat</li>
+        <li>slime.png: The png of the slime</li>
+        <li>goblin.png: The png of the goblin</li>
+        <li>kobold.png: The png of the kobold</li>
+        <li>troll.png: The png of the troll</li>
+        <li>orc.png: The png of the orc</li>
+        <li>ogre.png: The png of the ogre</li>
+        <li>two_headed_ogre.png: The png of the two headed ogre</li>
+        <li>goblin_priest.png: The png of the goblin priest</li>
+        <li>orc_chieftan.png: The png of the orc chieftan</li>
+        <li>lich.png: The png of the lich</li>
+        <li>grim_reaper.png: The png of the grim reaper</li>
+        <li>burning_slime.png: The png of the burning slime</li>
+        <li>dragon.png: The png of the dragon</li>
+        <li>princess.png: The png of the princess</li>
+      </ul>
     </ul>
     
     <h3>Resources</h3>
     <ul>
       <li>Pygame commands: <a href="https://www.pygame.org/docs/">https://www.pygame.org/docs/</a></li>
       <li>Icons: <a href="https://www.flaticon.com/">https://www.flaticon.com/</a></li>
-      <li>***(other resources)***</li>
+      
     </ul>
-    <p>For this project, we used pygame, a python library not covered in class. Pygame is a necessity for this project as it provides all the basic essentials for creating a game. It allows for easy display of the game, such as monsters and players, and as well as controls triggered by the keyboard. Pygame also allows us to provide graphics, which is something very important for a game. ***(describe how you use pygame)***</p>
+    <p>For this project, we used pygame, a python library not covered in class. We will be using pygame to create our game. PyGame is a necessity for this project to work. It provides us with all of the basic essentials for creating a game; things that aren’t possible for us to do with what we learned in class or in regular python. If they are possible in regular python, it would include a lot of extra code that would be easier to just use pygame. For example an easy to modify display for the game, including players and monsters, as well as controls that are triggered by one’s keyboard. The keybinds are essential for playing the game, and its easy-to-use display feature makes it possible for us to provide graphics in our game.</p>
     
     <h3>Bugs, Errors, and Things to be Aware of</h3>
     <ul>
