@@ -5,3 +5,7 @@ body {
 h1 {
   font-family: fantasy;
 }
+
+h3 {
+  text-decoration: underline;
+}
