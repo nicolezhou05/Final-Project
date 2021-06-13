@@ -326,11 +326,11 @@ while active:
         monsterycord3 -= int(monsterspeed3)/300
     
     if monstercollision1 == True:
-        plyrhealth -= monsterdamage2/550
+        plyrhealth -= int(monsterdamage1)/550
     if monstercollision2 == True:
-        plyrhealth -= monsterdamage2/550
+        plyrhealth -= int(monsterdamage2)/550
     if monstercollision3 == True:
-        plyrhealth -= monsterdamage3/550
+        plyrhealth -= int(monsterdamage3)/550
     
     if monsterhealth1 <= 0:
         monsterxcord1 += 1000
