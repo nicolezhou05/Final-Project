@@ -1,5 +1,5 @@
 body {
-  background-color: #D9DAE8;
+  background-color: #2B2D42;
 }
 
 h1 {
@@ -13,12 +13,12 @@ h3 {
 h1,
 h2,
 h3 {
-  color: #9A43B1;
+  color: #D80032;
 }
 
 p,
 li {
-  color: #B44EBC;
+  color: #EF233C;
 }
 
 ul {
@@ -26,5 +26,5 @@ ul {
 }
 
 a {
-  color: #956299;
+  color: #EF233C;
 }
