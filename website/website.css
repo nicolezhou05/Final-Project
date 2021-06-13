@@ -1,12 +1,17 @@
 body {
-  background-color: #D6D6D6;
+  background-color: #BFC1D9;
 }
 
 h1 {
   font-family: fantasy;
-  color: #7F7CA2;
 }
 
 h3 {
   text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  color: #9694B3;
 }
