@@ -137,12 +137,8 @@ def randomlist(minimum, maximum):
 
 monsteravatar1 = pygame.image.load(monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Image'])
 monsteravatar1 = pygame.transform.scale(monsteravatar1, (60,55))
-xcord = random.choice(randomlist(200, 700))
-ycord = random.choice(randomlist(100, 500))
-monsterxcord1 = xcord
-monsterycord1 = xcord
-monsterxcordchange1 = 0
-monsterycordchange1 = 0
+monsterxcord1 = random.choice(randomlist(200, 700))
+monsterycord1 = random.choice(randomlist(100, 500))
 monsterhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
 monstermaxhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
 monsterdamage1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Damage']
@@ -181,6 +177,15 @@ portalycord = 545
 
 def portal(x, y):
     screen.blit(portalavatar, (x,y))
+    
+#Health Potion
+healthpotionavatar = pygame.image.load('health_potion.png')
+healthpotionavatar = pygame.transform.scale(healthpotionavatar, (60,55))
+healthpotionxcord = random.choice(randomlist(200, 700))
+healthpotionycord = random.choice(randomlist(100, 500))
+
+def healthpotion(x, y):
+    screen.blit(healthpotionavatar, (x,y))
     
 def attack(attackedhealth, attacker_attackstat):
     if (monstercollision1 == True) or (monstercollision2 == True) or (monstercollision3 == True):
@@ -265,12 +270,7 @@ while active:
         plyrycord = 1
     if plyrycord >= 546:
         plyrycord = 544
-    
-    monsterxcord1 += monsterxcordchange1
-    monsterxcord2 += monsterxcordchange2
-    monsterxcord3 += monsterxcordchange3
 
-    
     #monster boundaries
     if -5000 <= monsterxcord1 <= 0:
         monsterxcord1 = 1
@@ -287,31 +287,32 @@ while active:
     monstercollision3 = collided(monsterxcord3, monsterycord3, plyrxcord, plyrycord)
         
     portalcollision = collided(portalxcord, portalycord, plyrxcord, plyrycord)
-        
+    healthpotioncollision = collided(healthpotionxcord, healthpotionycord, plyrxcord, plyrycord)
+    
     if plyrxcord > monsterxcord1:
-        monsterxcord1 += int(monsterspeed1)/500
+        monsterxcord1 += int(monsterspeed1)/300
     if plyrxcord < monsterxcord1:
-        monsterxcord1 -= int(monsterspeed1)/500
+        monsterxcord1 -= int(monsterspeed1)/300
     if plyrycord > monsterycord1:
-        monsterycord1 += int(monsterspeed1)/500
+        monsterycord1 += int(monsterspeed1)/300
     if plyrycord < monsterycord1:
-        monsterycord1 -= int(monsterspeed1)/500
+        monsterycord1 -= int(monsterspeed1)/300
     if plyrxcord > monsterxcord2:
-        monsterxcord2 += int(monsterspeed2)/500
+        monsterxcord2 += int(monsterspeed2)/300
     if plyrxcord < monsterxcord2:
-        monsterxcord2 -= int(monsterspeed2)/500
+        monsterxcord2 -= int(monsterspeed2)/300
     if plyrycord > monsterycord2:
-        monsterycord2 += int(monsterspeed2)/500
+        monsterycord2 += int(monsterspeed2)/300
     if plyrycord < monsterycord2:
-        monsterycord2 -= int(monsterspeed2)/500
+        monsterycord2 -= int(monsterspeed2)/300
     if plyrxcord > monsterxcord3:
-        monsterxcord3 += int(monsterspeed3)/500
+        monsterxcord3 += int(monsterspeed3)/300
     if plyrxcord < monsterxcord3:
-        monsterxcord3 -= int(monsterspeed3)/500
+        monsterxcord3 -= int(monsterspeed3)/300
     if plyrycord > monsterycord3:
-        monsterycord3 += int(monsterspeed3)/500
+        monsterycord3 += int(monsterspeed3)/300
     if plyrycord < monsterycord3:
-        monsterycord3 -= int(monsterspeed3)/500
+        monsterycord3 -= int(monsterspeed3)/300
     
     if monstercollision1 == True:
         plyrhealth -= monsterdamage2/600
@@ -319,7 +320,6 @@ while active:
         plyrhealth -= monsterdamage2/600
     if monstercollision3 == True:
         plyrhealth -= monsterdamage3/600
-
     
     if monsterhealth1 <= 0:
         monsterxcord1 += 1000
@@ -342,10 +342,13 @@ while active:
     if plyrhealth <= 0:
         deathmessage = font.render(("You Lose!"),True,black)
         screen.blit(deathmessage, (400,300))
-#    if collision == True:
-#        monster = 0
-        # monster image turn highlighted
-        # if player hit monster take damage
+        
+    if plyrhealth <= 15:
+        healthpotion(healthpotionxcord,healthpotionycord)
+        if healthpotioncollision == True:
+            plyrhealth += level * 7
+            healthpotionxcord += 1000
+            healthpotionycord += 1000
         
     #chatlogs
     pygame.font.init
@@ -362,7 +365,6 @@ while active:
     monster(monsteravatar2, monsterxcord2, monsterycord2)
     monster(monsteravatar3, monsterxcord3, monsterycord3)
     
-    
     if monstersdead == 3:
         portal(portalxcord, portalycord)
         if portalcollision == True:
@@ -373,14 +375,14 @@ while active:
             plyrattack += random.randint(1,5)
             level += 1
             totalmonstersdead += monstersdead
-#if multiple of 7 increase loop by 1
             
-#            if level == 7:
-            
-#                pygame.display.quit()
-#                active = False
-#                quit()
-                
+            if level == 7:    
+                pygame.display.quit()
+                active = False
+                quit()
+            healthpotionxcord = random.choice(randomlist(200, 700))
+            healthpotionycord = random.choice(randomlist(100, 500))
+
             #Monster Setups
             monsteravatar1 = pygame.image.load(monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Image'])
             monsteravatar1 = pygame.transform.scale(monsteravatar1, (60,55))
@@ -410,4 +412,4 @@ while active:
     pygame.display.update()
     if plyrhealth > plyrmaxhealth:
         plyrhealth = plyrmaxhealth
-        
+       
