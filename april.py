@@ -196,7 +196,7 @@ levely = 10
 
 
 def show_health(x,y):
-    health = font.render("Health:" + str(plyrhealth) + '/' + str(plyrmaxhealth),True, black)
+    health = font.render("Health:" + str(plyrhealth//1) + '/' + str(plyrmaxhealth),True, black)
     screen.blit(health, (x, y))
     
 def show_level(x,y):
@@ -230,138 +230,15 @@ while active:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 plyrxcord -= 50
-                if plyrxcord > monsterxcord1:
-                    monsterxcord1 += int(monsterspeed1)
-                if plyrxcord < monsterxcord1:
-                    monsterxcord1 -= int(monsterspeed1)
-                if plyrycord > monsterycord1:
-                    monsterycord1 += int(monsterspeed1)
-                if plyrycord < monsterycord1:
-                    monsterycord1 -= int(monsterspeed1)
-                if plyrxcord > monsterxcord2:
-                    monsterxcord2 += int(monsterspeed2)
-                if plyrxcord < monsterxcord2:
-                    monsterxcord2 -= int(monsterspeed2)
-                if plyrycord > monsterycord2:
-                    monsterycord2 += int(monsterspeed2)
-                if plyrycord < monsterycord2:
-                    monsterycord2 -= int(monsterspeed2)
-                if plyrxcord > monsterxcord3:
-                    monsterxcord3 += int(monsterspeed3)
-                if plyrxcord < monsterxcord3:
-                    monsterxcord3 -= int(monsterspeed3)
-                if plyrycord > monsterycord3:
-                    monsterycord3 += int(monsterspeed3)
-                if plyrycord < monsterycord3:
-                    monsterycord3 -= int(monsterspeed3)
-
-                if monstercollision2 == True:
-                    plyrhealth -= monsterdamage2
-                if monstercollision3 == True:
-                    plyrhealth -= monsterdamage3
 
             if event.key == pygame.K_RIGHT:
                 plyrxcord += 50
-                if plyrxcord > monsterxcord1:
-                    monsterxcord1 += int(monsterspeed1)
-                if plyrxcord < monsterxcord1:
-                    monsterxcord1 -= int(monsterspeed1)
-                if plyrycord > monsterycord1:
-                    monsterycord1 += int(monsterspeed1)
-                if plyrycord < monsterycord1:
-                    monsterycord1 -= int(monsterspeed1)
-                if plyrxcord > monsterxcord2:
-                    monsterxcord2 += int(monsterspeed2)
-                if plyrxcord < monsterxcord2:
-                    monsterxcord2 -= int(monsterspeed2)
-                if plyrycord > monsterycord2:
-                    monsterycord2 += int(monsterspeed2)
-                if plyrycord < monsterycord2:
-                    monsterycord2 -= int(monsterspeed2)
-                if plyrxcord > monsterxcord3:
-                    monsterxcord3 += int(monsterspeed3)
-                if plyrxcord < monsterxcord3:
-                    monsterxcord3 -= int(monsterspeed3)
-                if plyrycord > monsterycord3:
-                    monsterycord3 += int(monsterspeed3)
-                if plyrycord < monsterycord3:
-                    monsterycord3 -= int(monsterspeed3)
-                if monstercollision1 == True:
-                    plyrhealth -= monsterdamage1
-                if monstercollision2 == True:
-                    plyrhealth -= monsterdamage2
-                if monstercollision3 == True:
-                    plyrhealth -= monsterdamage3
-                
+
             if event.key == pygame.K_UP:
                 plyrycord -= 50
-                if plyrxcord > monsterxcord1:
-                    monsterxcord1 += int(monsterspeed1)
-                if plyrxcord < monsterxcord1:
-                    monsterxcord1 -= int(monsterspeed1)
-                if plyrycord > monsterycord1:
-                    monsterycord1 += int(monsterspeed1)
-                if plyrycord < monsterycord1:
-                    monsterycord1 -= int(monsterspeed1)
-                if plyrxcord > monsterxcord2:
-                    monsterxcord2 += int(monsterspeed2)
-                if plyrxcord < monsterxcord2:
-                    monsterxcord2 -= int(monsterspeed2)
-                if plyrycord > monsterycord2:
-                    monsterycord2 += int(monsterspeed2)
-                if plyrycord < monsterycord2:
-                    monsterycord2 -= int(monsterspeed2)
-                if plyrxcord > monsterxcord3:
-                    monsterxcord3 += int(monsterspeed3)
-                if plyrxcord < monsterxcord3:
-                    monsterxcord3 -= int(monsterspeed3)
-                if plyrycord > monsterycord3:
-                    monsterycord3 += int(monsterspeed3)
-                if plyrycord < monsterycord3:
-                    monsterycord3 -= int(monsterspeed3)
-                if monstercollision1 == True:
-                    plyrhealth -= monsterdamage1
-                if monstercollision2 == True:
-                    plyrhealth -= monsterdamage2
-                if monstercollision3 == True:
-                    plyrhealth -= monsterdamage3
                 
             if event.key == pygame.K_DOWN:
                 plyrycord += 50
-                if plyrxcord > monsterxcord1:
-                    monsterxcord1 += int(monsterspeed1)
-                if plyrxcord < monsterxcord1:
-                    monsterxcord1 -= int(monsterspeed1)
-                if plyrycord > monsterycord1:
-                    monsterycord1 += int(monsterspeed1)
-                if plyrycord < monsterycord1:
-                    monsterycord1 -= int(monsterspeed1)
-                if plyrxcord > monsterxcord2:
-                    monsterxcord2 += int(monsterspeed2)
-                if plyrxcord < monsterxcord2:
-                    monsterxcord2 -= int(monsterspeed2)
-                if plyrycord > monsterycord2:
-                    monsterycord2 += int(monsterspeed2)
-                if plyrycord < monsterycord2:
-                    monsterycord2 -= int(monsterspeed2)
-                if plyrxcord > monsterxcord3:
-                    monsterxcord3 += int(monsterspeed3)
-                if plyrxcord < monsterxcord3:
-                    monsterxcord3 -= int(monsterspeed3)
-                if plyrycord > monsterycord3:
-                    monsterycord3 += int(monsterspeed3)
-                if plyrycord < monsterycord3:
-                    monsterycord3 -= int(monsterspeed3)
-                if monstercollision1 == True:
-                    plyrhealth -= monsterdamage1
-                    maxcord1 = monsterxcord1
-                    maycord1 = monsterycord1
-                if monstercollision2 == True:
-                    plyrhealth -= monsterdamage2
-                    maxcord2 = monsterxcord2
-                    maycord2 = monsterycord2
-                if monstercollision3 == True:
-                    plyrhealth -= monsterdamage3
                 
         #Player attack
             if event.key == pygame.K_a:
@@ -411,6 +288,39 @@ while active:
         
     portalcollision = collided(portalxcord, portalycord, plyrxcord, plyrycord)
         
+    if plyrxcord > monsterxcord1:
+        monsterxcord1 += int(monsterspeed1)/500
+    if plyrxcord < monsterxcord1:
+        monsterxcord1 -= int(monsterspeed1)/500
+    if plyrycord > monsterycord1:
+        monsterycord1 += int(monsterspeed1)/500
+    if plyrycord < monsterycord1:
+        monsterycord1 -= int(monsterspeed1)/500
+    if plyrxcord > monsterxcord2:
+        monsterxcord2 += int(monsterspeed2)/500
+    if plyrxcord < monsterxcord2:
+        monsterxcord2 -= int(monsterspeed2)/500
+    if plyrycord > monsterycord2:
+        monsterycord2 += int(monsterspeed2)/500
+    if plyrycord < monsterycord2:
+        monsterycord2 -= int(monsterspeed2)/500
+    if plyrxcord > monsterxcord3:
+        monsterxcord3 += int(monsterspeed3)/500
+    if plyrxcord < monsterxcord3:
+        monsterxcord3 -= int(monsterspeed3)/500
+    if plyrycord > monsterycord3:
+        monsterycord3 += int(monsterspeed3)/500
+    if plyrycord < monsterycord3:
+        monsterycord3 -= int(monsterspeed3)/500
+    
+    if monstercollision1 == True:
+        plyrhealth -= monsterdamage2/600
+    if monstercollision2 == True:
+        plyrhealth -= monsterdamage2/600
+    if monstercollision3 == True:
+        plyrhealth -= monsterdamage3/600
+
+    
     if monsterhealth1 <= 0:
         monsterxcord1 += 1000
         monsterycord1 += 1000
@@ -501,8 +411,3 @@ while active:
     if plyrhealth > plyrmaxhealth:
         plyrhealth = plyrmaxhealth
         
-     
-            
-        
-            
-          
