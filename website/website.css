@@ -1,5 +1,5 @@
 body {
-  background-color: #BFC1D9;
+  background-color: #D9DAE8;
 }
 
 h1 {
@@ -13,5 +13,18 @@ h3 {
 h1,
 h2,
 h3 {
-  color: #9694B3;
+  color: #9A43B1;
+}
+
+p,
+li {
+  color: #B44EBC;
+}
+
+ul {
+  list-style-type: circle;
+}
+
+a {
+  color: #956299;
 }
