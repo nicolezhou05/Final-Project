@@ -221,10 +221,15 @@ def show_monsterhealth3(x,y):
 
 totalmonstersdead = 0
 
-story = ['You have entered the dungeon to save the princess','You have entered the second room', 'You continue to fight', "You are getting tired but won't give up", 'You are very close to the princess', 'You has to defeat the last monster, the dragon', "Good job! You won and saved the princess!"]
+story = ['The Princess has been kidnapped by Nebius, the Chaos Dragon.','You cleave the bat in half, tear the zombie to shreds, and make quick work of the skeleton.', 'You will stop at nothing to save the princess, even if it costs you your life.', "Monsters of all shapes and sizes rush at you.", 'You can tell that you`re nearing the end.', 'ROOOAAAAARRRRRRRR!!!!! A flurry of wings and claws hurls itself in your direction.', "With a triumphant roar, you raise your sword for a final strike, beheading the great beast."]
+story2 = ['You, the Royal Champion, have been ordered by the king to save her. ','Then you dive into the portal, searching for the Dragon`s lair.', 'You charge into the next portal, ready for anything.', "You stand your ground, a bead of sweat visible underneath your helm.", 'You`ve fought so hard. You must save the princess no matter what.', 'You raise your sword, and prepare to stand your ground.', "Congratulations! You've saved the princess!"]
 def show_story():
     storydisplay = font.render(story[level-1],True,black)
-    screen.blit(storydisplay, (200, 550))
+    screen.blit(storydisplay, (3, 563))
+def show_story2():
+    storydisplay = font.render(story2[level-1],True,black)
+    screen.blit(storydisplay, (3, 583))
+    
 
 princessavatar = pygame.image.load('princess.png')
 princessavatar = pygame.transform.scale(princessavatar, (60,55))
@@ -326,11 +331,11 @@ while active:
         monsterycord3 -= int(monsterspeed3)/300
     
     if monstercollision1 == True:
-        plyrhealth -= int(monsterdamage1)/550
+        plyrhealth -= monsterdamage2/550
     if monstercollision2 == True:
-        plyrhealth -= int(monsterdamage2)/550
+        plyrhealth -= monsterdamage2/550
     if monstercollision3 == True:
-        plyrhealth -= int(monsterdamage3)/550
+        plyrhealth -= monsterdamage3/550
     
     if monsterhealth1 <= 0:
         monsterxcord1 += 1000
@@ -353,8 +358,8 @@ while active:
         monstersdead += 1
     
     if plyrhealth <= 0:
-        deathmessage = font.render(("You Lose!"),True,black)
-        screen.blit(deathmessage, (400,300))
+        deathmessage = font.render(("You fought valiantly, but it is all for naught. You've become Nebius' lunch, and the princess is doomed!"),True,red)
+        screen.blit(deathmessage, (3,plyrycord - 65))
         
     if plyrhealth <= 15:
         healthpotion(healthpotionxcord,healthpotionycord)
@@ -373,6 +378,7 @@ while active:
     show_health(healthx, healthy)
     show_level(levelx, levely)
     show_story()
+    show_story2()
         
     player(plyrxcord,plyrycord)
     monster(monsteravatar1, monsterxcord1, monsterycord1)
@@ -426,4 +432,3 @@ while active:
     pygame.display.update()
     if plyrhealth > plyrmaxhealth:
         plyrhealth = plyrmaxhealth
-        
