@@ -1,6 +1,5 @@
 import pygame
 import random
-from pprint import pprint
 
 #Colors
 white = (255,255,255)
@@ -25,16 +24,16 @@ playeravatar = pygame.transform.scale(playeravatar, (60,55))
 
 plyrxcord = 75
 plyrycord = 300
-plyrhealth = 100
-plyrmaxhealth = 100
+plyrhealth = 25
+plyrmaxhealth = 25
 plyrattack = 5
 
 def player(x,y):
     screen.blit(playeravatar, (x,y))
 
 #determine if collided
-def collided (monsterxcord1, monsterycord1, playerxcord, playerycord):
-    distance = ((monsterxcord1 - plyrxcord)**2 + (monsterycord1 - plyrycord)**2)**0.5
+def collided (mxcord1, mycord1, pxcord, pycord):
+    distance = ((mxcord1 - pxcord)**2 + (mycord1 - pycord)**2)**0.5
     if distance < 54:
         return True
     else:
@@ -68,7 +67,7 @@ def make_monster_dict(data):
         sub_list = []
         order = 1
         while order < len(data[0]):
-            if order < len(data[0])-1:
+            if order < len(data[0])-3:
                 sub_list.append(int(x[order]))
             else:
                 sub_list.append(x[order])
@@ -95,8 +94,8 @@ monster_dict = make_monster_dict(monster_data)
 monster_combine = combine_dict(monster_dict, monster_headers)
 
 monster_list = []
-for x in monster_data:
-    monster_list.append(x[0])
+for mons in monster_data:
+    monster_list.append(mons[0])
 
 monsternumber = 5
 order = 0
@@ -140,13 +139,6 @@ monsteravatar1 = pygame.image.load(monsterstats[level][monster_list[0 + ((level 
 monsteravatar1 = pygame.transform.scale(monsteravatar1, (60,55))
 xcord = random.choice(randomlist(200, 700))
 ycord = random.choice(randomlist(100, 500))
-#make sure ogres don't spawn in same area 
-#    collide = True
-#    while collide == True:
-#        for x in ogrexcord:
-#            if xcord = ogrexcord[x] 
-#        xcord = random.choice(randomlist(150, 720))
-#        ycord = random.choice(randomlist(50, 550))
 monsterxcord1 = xcord
 monsterycord1 = xcord
 monsterxcordchange1 = 0
@@ -154,6 +146,8 @@ monsterycordchange1 = 0
 monsterhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
 monstermaxhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
 monsterdamage1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Damage']
+monsterspeed1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Speed']
+                                         
 
 monsteravatar2 = pygame.image.load(monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Image'])
 monsteravatar2 = pygame.transform.scale(monsteravatar2, (60,55))
@@ -164,6 +158,8 @@ monsterycordchange2 = 0
 monsterhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
 monstermaxhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
 monsterdamage2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Damage']
+monsterspeed2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Speed']
+
 
 monsteravatar3 = pygame.image.load(monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Image'])
 monsteravatar3 = pygame.transform.scale(monsteravatar3, (60,55))
@@ -174,18 +170,23 @@ monsterycordchange3 = 0
 monsterhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
 monstermaxhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
 monsterdamage3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Damage']
+monsterspeed3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Speed']
+
+
 
 def monster(avatar, x, y):
     screen.blit(avatar, (x,y))
     
-#Door 
-dooravatar = pygame.image.load('door.png')
-dooravatar = pygame.transform.scale(dooravatar, (60,55))
-doorxcord = 730
-doorycord = 545
+    
 
-def door(x, y):
-    screen.blit(dooravatar, (x,y))
+#portal 
+portalavatar = pygame.image.load('portal.png')
+portalavatar = pygame.transform.scale(portalavatar, (60,55))
+portalxcord = 730
+portalycord = 545
+
+def portal(x, y):
+    screen.blit(portalavatar, (x,y))
     
 def attack(attackedhealth, attacker_attackstat):
     if (monstercollision1 == True) or (monstercollision2 == True) or (monstercollision3 == True):
@@ -196,10 +197,17 @@ font = pygame.font.Font('freesansbold.ttf', 16)
 smallfont = pygame.font.Font('freesansbold.ttf',8)
 healthx = 10
 healthy = 10
+levelx = 710
+levely = 10
+
 
 def show_health(x,y):
     health = font.render("Health:" + str(plyrhealth) + '/' + str(plyrmaxhealth),True, black)
     screen.blit(health, (x, y))
+    
+def show_level(x,y):
+    showlevel = font.render("Level " + str(level),True, black)
+    screen.blit(showlevel, (x, y))
     
 def show_monsterhealth1(x,y):
     monsterhealthdisplay1 = font.render(str(monsterhealth1),True,black)
@@ -212,6 +220,7 @@ def show_monsterhealth2(x,y):
 def show_monsterhealth3(x,y):
     monsterhealthdisplay3 = font.render(str(monsterhealth3),True,black)
     screen.blit(monsterhealthdisplay3, (x - 15, y))
+
 
 #Game Loop
 active = True
@@ -226,12 +235,139 @@ while active:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 plyrxcord -= 50
+                if plyrxcord > monsterxcord1:
+                    monsterxcord1 += int(monsterspeed1)
+                if plyrxcord < monsterxcord1:
+                    monsterxcord1 -= int(monsterspeed1)
+                if plyrycord > monsterycord1:
+                    monsterycord1 += int(monsterspeed1)
+                if plyrycord < monsterycord1:
+                    monsterycord1 -= int(monsterspeed1)
+                if plyrxcord > monsterxcord2:
+                    monsterxcord2 += int(monsterspeed2)
+                if plyrxcord < monsterxcord2:
+                    monsterxcord2 -= int(monsterspeed2)
+                if plyrycord > monsterycord2:
+                    monsterycord2 += int(monsterspeed2)
+                if plyrycord < monsterycord2:
+                    monsterycord2 -= int(monsterspeed2)
+                if plyrxcord > monsterxcord3:
+                    monsterxcord3 += int(monsterspeed3)
+                if plyrxcord < monsterxcord3:
+                    monsterxcord3 -= int(monsterspeed3)
+                if plyrycord > monsterycord3:
+                    monsterycord3 += int(monsterspeed3)
+                if plyrycord < monsterycord3:
+                    monsterycord3 -= int(monsterspeed3)
+                  
+                if monstercollision2 == True:
+                    plyrhealth -= monsterdamage2
+                if monstercollision3 == True:
+                    plyrhealth -= monsterdamage3
+
             if event.key == pygame.K_RIGHT:
                 plyrxcord += 50
+                if plyrxcord > monsterxcord1:
+                    monsterxcord1 += int(monsterspeed1)
+                if plyrxcord < monsterxcord1:
+                    monsterxcord1 -= int(monsterspeed1)
+                if plyrycord > monsterycord1:
+                    monsterycord1 += int(monsterspeed1)
+                if plyrycord < monsterycord1:
+                    monsterycord1 -= int(monsterspeed1)
+                if plyrxcord > monsterxcord2:
+                    monsterxcord2 += int(monsterspeed2)
+                if plyrxcord < monsterxcord2:
+                    monsterxcord2 -= int(monsterspeed2)
+                if plyrycord > monsterycord2:
+                    monsterycord2 += int(monsterspeed2)
+                if plyrycord < monsterycord2:
+                    monsterycord2 -= int(monsterspeed2)
+                if plyrxcord > monsterxcord3:
+                    monsterxcord3 += int(monsterspeed3)
+                if plyrxcord < monsterxcord3:
+                    monsterxcord3 -= int(monsterspeed3)
+                if plyrycord > monsterycord3:
+                    monsterycord3 += int(monsterspeed3)
+                if plyrycord < monsterycord3:
+                    monsterycord3 -= int(monsterspeed3)
+                if monstercollision1 == True:
+                    plyrhealth -= monsterdamage1
+                if monstercollision2 == True:
+                    plyrhealth -= monsterdamage2
+                if monstercollision3 == True:
+                    plyrhealth -= monsterdamage3
+                
             if event.key == pygame.K_UP:
                 plyrycord -= 50
+                if plyrxcord > monsterxcord1:
+                    monsterxcord1 += int(monsterspeed1)
+                if plyrxcord < monsterxcord1:
+                    monsterxcord1 -= int(monsterspeed1)
+                if plyrycord > monsterycord1:
+                    monsterycord1 += int(monsterspeed1)
+                if plyrycord < monsterycord1:
+                    monsterycord1 -= int(monsterspeed1)
+                if plyrxcord > monsterxcord2:
+                    monsterxcord2 += int(monsterspeed2)
+                if plyrxcord < monsterxcord2:
+                    monsterxcord2 -= int(monsterspeed2)
+                if plyrycord > monsterycord2:
+                    monsterycord2 += int(monsterspeed2)
+                if plyrycord < monsterycord2:
+                    monsterycord2 -= int(monsterspeed2)
+                if plyrxcord > monsterxcord3:
+                    monsterxcord3 += int(monsterspeed3)
+                if plyrxcord < monsterxcord3:
+                    monsterxcord3 -= int(monsterspeed3)
+                if plyrycord > monsterycord3:
+                    monsterycord3 += int(monsterspeed3)
+                if plyrycord < monsterycord3:
+                    monsterycord3 -= int(monsterspeed3)
+                if monstercollision1 == True:
+                    plyrhealth -= monsterdamage1
+                if monstercollision2 == True:
+                    plyrhealth -= monsterdamage2
+                if monstercollision3 == True:
+                    plyrhealth -= monsterdamage3
+                
             if event.key == pygame.K_DOWN:
                 plyrycord += 50
+                if plyrxcord > monsterxcord1:
+                    monsterxcord1 += int(monsterspeed1)
+                if plyrxcord < monsterxcord1:
+                    monsterxcord1 -= int(monsterspeed1)
+                if plyrycord > monsterycord1:
+                    monsterycord1 += int(monsterspeed1)
+                if plyrycord < monsterycord1:
+                    monsterycord1 -= int(monsterspeed1)
+                if plyrxcord > monsterxcord2:
+                    monsterxcord2 += int(monsterspeed2)
+                if plyrxcord < monsterxcord2:
+                    monsterxcord2 -= int(monsterspeed2)
+                if plyrycord > monsterycord2:
+                    monsterycord2 += int(monsterspeed2)
+                if plyrycord < monsterycord2:
+                    monsterycord2 -= int(monsterspeed2)
+                if plyrxcord > monsterxcord3:
+                    monsterxcord3 += int(monsterspeed3)
+                if plyrxcord < monsterxcord3:
+                    monsterxcord3 -= int(monsterspeed3)
+                if plyrycord > monsterycord3:
+                    monsterycord3 += int(monsterspeed3)
+                if plyrycord < monsterycord3:
+                    monsterycord3 -= int(monsterspeed3)
+                if monstercollision1 == True:
+                    plyrhealth -= monsterdamage1
+                    maxcord1 = monsterxcord1
+                    maycord1 = monsterycord1
+                if monstercollision2 == True:
+                    plyrhealth -= monsterdamage2
+                    maxcord2 = monsterxcord2
+                    maycord2 = monsterycord2
+                if monstercollision3 == True:
+                    plyrhealth -= monsterdamage3
+                
         #Player attack
             if event.key == pygame.K_a:
                 if monstercollision1 == True:
@@ -261,14 +397,15 @@ while active:
     monsterxcord2 += monsterxcordchange2
     monsterxcord3 += monsterxcordchange3
 
+    
     #monster boundaries
-    if -50 >= monsterxcord1 <= 0:
+    if -5000 <= monsterxcord1 <= 0:
         monsterxcord1 = 1
-    if 800 >= monsterxcord1 >= 740:
+    if 8000 >= monsterxcord1 >= 740:
         monsterxcord1 = 739
-    if -50 >= monsterycord1 <= 0:
+    if -5000 <= monsterycord1 <= 0:
         monsterycord1 = 1
-    if 600 >= monsterycord1 >= 546:
+    if 6000 >= monsterycord1 >= 546:
         monsterycord1 = 544
     
     #Collision
@@ -276,52 +413,14 @@ while active:
     monstercollision2 = collided(monsterxcord2, monsterycord2, plyrxcord, plyrycord)
     monstercollision3 = collided(monsterxcord3, monsterycord3, plyrxcord, plyrycord)
         
-    doorcollision = collided(doorxcord, doorycord, plyrxcord, plyrycord) 
-    if doorcollision == True:
-        plyrxcord = 75
-        plyrycord = 300
-        plyrmaxhealth += 50
-        plyrhealth += 50
-        plyrattack += 50
-        level += 1
-        
-        if level == 7:
-            pygame.display.quit()
-            active = False
-            quit()
-            
-        #Monster Setups
-        monsteravatar1 = pygame.image.load(monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Image'])
-        monsteravatar1 = pygame.transform.scale(monsteravatar1, (60,55))
-        monsterxcord1 = random.choice(randomlist(200, 700))
-        monsterycord1 = random.choice(randomlist(100, 500))
-        monsterhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
-        monstermaxhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
-        monsterdamage1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Damage']
-        
-        if level != 6:
-            monsteravatar2 = pygame.image.load(monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Image'])
-            monsteravatar2 = pygame.transform.scale(monsteravatar2, (60,55))
-            monsterxcord2 = random.choice(randomlist(200, 700))
-            monsterycord2 = random.choice(randomlist(100, 500))
-            monsterhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
-            monstermaxhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
-            monsterdamage2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Damage']
-
-            monsteravatar3 = pygame.image.load(monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Image'])
-            monsteravatar3 = pygame.transform.scale(monsteravatar3, (60,55))
-            monsterxcord3 = random.choice(randomlist(200, 700))
-            monsterycord3 = random.choice(randomlist(100, 500))
-            monsterhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
-            monstermaxhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
-            monsterdamage3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Damage']
+    portalcollision = collided(portalxcord, portalycord, plyrxcord, plyrycord)
         
     if monsterhealth1 <= 0:
         monsterxcord1 += 1000
         monsterycord1 += 1000
         monstersdead += 1
         if level == 6:
-            endmessage = font.render(("Game Finished. Please exit."),True,black)
+            endmessage = font.render(("GG! You won!"),True,black)
             screen.blit(endmessage, (400, 300))
 
     if monsterhealth2 <= 0:
@@ -334,33 +433,68 @@ while active:
         monsterycord3 += 1000
         monstersdead += 1 
     
+    if plyrhealth <= 0:
+        deathmessage = font.render(("You Lose!"),True,black)
+        screen.blit(deathmessage, (400,300))
 #    if collision == True:
 #        monster = 0
         # monster image turn highlighted
         # if player hit monster take damage
         
     #chatlogs
-    pygame.font.init
-    pygame.font.quit
     show_monsterhealth1(monsterxcord1,monsterycord1)
     show_monsterhealth2(monsterxcord2,monsterycord2)
     show_monsterhealth3(monsterxcord3,monsterycord3)
 
     show_health(healthx, healthy)
+    show_level(levelx, levely)
         
     player(plyrxcord,plyrycord)
     monster(monsteravatar1, monsterxcord1, monsterycord1)
     monster(monsteravatar2, monsterxcord2, monsterycord2)
     monster(monsteravatar3, monsterxcord3, monsterycord3)
-
+    
+    
     if monstersdead == 3:
-        door(doorxcord, doorycord)
+        portal(portalxcord, portalycord)
+        if portalcollision == True:
+            plyrxcord = 75
+            plyrycord = 300
+            plyrmaxhealth += 10
+            plyrhealth += 10
+            plyrattack += random.randint(1,5)
+            level += 1
+        
+            if level == 7:
+                pygame.display.quit()
+                active = False
+                quit()
+                
+            #Monster Setups
+            monsteravatar1 = pygame.image.load(monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Image'])
+            monsteravatar1 = pygame.transform.scale(monsteravatar1, (60,55))
+            monsterxcord1 = random.choice(randomlist(200, 700))
+            monsterycord1 = random.choice(randomlist(100, 500))
+            monsterhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
+            monstermaxhealth1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Health']
+            monsterdamage1 = monsterstats[level][monster_list[0 + ((level - 1) * 3)]]['Damage']
+        
+            if level != 6:
+                monsteravatar2 = pygame.image.load(monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Image'])
+                monsteravatar2 = pygame.transform.scale(monsteravatar2, (60,55))
+                monsterxcord2 = random.choice(randomlist(200, 700))
+                monsterycord2 = random.choice(randomlist(100, 500))
+                monsterhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
+                monstermaxhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
+                monsterdamage2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Damage']
+
+                monsteravatar3 = pygame.image.load(monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Image'])
+                monsteravatar3 = pygame.transform.scale(monsteravatar3, (60,55))
+                monsterxcord3 = random.choice(randomlist(200, 700))
+                monsterycord3 = random.choice(randomlist(100, 500))
+                monsterhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
+                monstermaxhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
+                monsterdamage3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Damage']
     pygame.display.update()
     if plyrhealth > plyrmaxhealth:
         plyrhealth = plyrmaxhealth
-        
-     
-            
-        
-            
-            
