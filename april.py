@@ -9,7 +9,6 @@ blue = (0, 0, 128)
 black = (0, 0, 0)
 gray = (220,220,220)
 
-#This initializes PyGame
 pygame.init()
 
 #Display
@@ -31,16 +30,13 @@ plyrattack = 5
 def player(x,y):
     screen.blit(playeravatar, (x,y))
 
-#determine if collided
-def collided (monsterxcord1, monsterycord1, playerxcord, playerycord):
-    distance = ((monsterxcord1 - plyrxcord)**2 + (monsterycord1 - plyrycord)**2)**0.5
+#Collision
+def collided (x1, y1, x2, y2):
+    distance = ((x1 - x2)**2 + (y1 - y2)**2)**0.5
     if distance < 54:
         return True
     else:
         return False
-
-level = 1
-monstersdead = 0
 
 #Monsters dictionary
 monsterstats_file = open('monsterstats.csv')
@@ -148,8 +144,6 @@ monsteravatar2 = pygame.image.load(monsterstats[level][monster_list[1 + ((level 
 monsteravatar2 = pygame.transform.scale(monsteravatar2, (60,55))
 monsterxcord2 = random.choice(randomlist(200, 700))
 monsterycord2 = random.choice(randomlist(100, 500))
-monsterxcordchange2 = 0
-monsterycordchange2 = 0
 monsterhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
 monstermaxhealth2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Health']
 monsterdamage2 = monsterstats[level][monster_list[1 + ((level - 1) * 3)]]['Damage']
@@ -159,8 +153,6 @@ monsteravatar3 = pygame.image.load(monsterstats[level][monster_list[2 + ((level 
 monsteravatar3 = pygame.transform.scale(monsteravatar3, (60,55))
 monsterxcord3 = random.choice(randomlist(200, 700))
 monsterycord3 = random.choice(randomlist(100, 500))
-monsterxcordchange3 = 0
-monsterycordchange3 = 0
 monsterhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
 monstermaxhealth3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Health']
 monsterdamage3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Damage']
@@ -169,7 +161,7 @@ monsterspeed3 = monsterstats[level][monster_list[2 + ((level - 1) * 3)]]['Speed'
 def monster(avatar, x, y):
     screen.blit(avatar, (x,y))
 
-#portal 
+#Portal 
 portalavatar = pygame.image.load('portal.png')
 portalavatar = pygame.transform.scale(portalavatar, (60,55))
 portalxcord = 730
@@ -187,18 +179,13 @@ healthpotionycord = random.choice(randomlist(100, 500))
 def healthpotion(x, y):
     screen.blit(healthpotionavatar, (x,y))
     
-def attack(attackedhealth, attacker_attackstat):
-    if (monstercollision1 == True) or (monstercollision2 == True) or (monstercollision3 == True):
-        attackedhealth -= attacker_attackstat
-    
-#Text
+#Texts
 font = pygame.font.Font('freesansbold.ttf', 16)
 smallfont = pygame.font.Font('freesansbold.ttf',8)
 healthx = 10
 healthy = 10
 levelx = 710
 levely = 10
-
 
 def show_health(x,y):
     health = font.render("Health:" + str(plyrhealth//1) + '/' + str(plyrmaxhealth),True, black)
@@ -222,6 +209,22 @@ def show_monsterhealth3(x,y):
 
 totalmonstersdead = 0
 
+story = ['You have entered the dungeon to save the princess','You have entered the second room', 'You continue to fight', "You are getting tired but won't give up", 'You are very close to the princess', 'You has to defeat the last monster, the dragon', "Good job! You won and saved the princess!"]
+def show_story():
+    storydisplay = font.render(story[level-1],True,black)
+    screen.blit(storydisplay, (200, 550))
+
+princessavatar = pygame.image.load('princess.png')
+princessavatar = pygame.transform.scale(princessavatar, (60,55))
+princessxcord = 700
+princessycord = 300
+
+def princess(x,y):
+    screen.blit(princessavatar, (x,y))
+
+level = 1
+monstersdead = 0
+
 #Game Loop
 active = True
 while active:
@@ -235,27 +238,20 @@ while active:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 plyrxcord -= 50
-
             if event.key == pygame.K_RIGHT:
                 plyrxcord += 50
-
             if event.key == pygame.K_UP:
                 plyrycord -= 50
-                
             if event.key == pygame.K_DOWN:
                 plyrycord += 50
                 
         #Player attack
             if event.key == pygame.K_a:
-                print(totalmonstersdead)
                 if monstercollision1 == True:
-                    attack(monsterhealth1, plyrattack)
                     monsterhealth1 -= plyrattack
                 if monstercollision2 == True:
-                    attack(monsterhealth2, plyrattack)
                     monsterhealth2 -= plyrattack
                 if monstercollision3 == True:
-                    attack(monsterhealth3, plyrattack)
                     monsterhealth3 -= plyrattack
      
     screen.fill(gray)
@@ -281,14 +277,15 @@ while active:
     if 6000 >= monsterycord1 >= 546:
         monsterycord1 = 544
     
-    #Collision
+    #Collisions
     monstercollision1 = collided(monsterxcord1, monsterycord1, plyrxcord, plyrycord)
     monstercollision2 = collided(monsterxcord2, monsterycord2, plyrxcord, plyrycord)
     monstercollision3 = collided(monsterxcord3, monsterycord3, plyrxcord, plyrycord)
-        
+    
     portalcollision = collided(portalxcord, portalycord, plyrxcord, plyrycord)
     healthpotioncollision = collided(healthpotionxcord, healthpotionycord, plyrxcord, plyrycord)
     
+    #Monster Movement
     if plyrxcord > monsterxcord1:
         monsterxcord1 += int(monsterspeed1)/300
     if plyrxcord < monsterxcord1:
@@ -315,29 +312,32 @@ while active:
         monsterycord3 -= int(monsterspeed3)/300
     
     if monstercollision1 == True:
-        plyrhealth -= monsterdamage2/600
+        plyrhealth -= int(monsterdamage1)/550
     if monstercollision2 == True:
-        plyrhealth -= monsterdamage2/600
+        plyrhealth -= int(monsterdamage2)/550
     if monstercollision3 == True:
-        plyrhealth -= monsterdamage3/600
+        plyrhealth -= int(monsterdamage3)/550
     
+    #Monster Death
     if monsterhealth1 <= 0:
-        monsterxcord1 += 1000
-        monsterycord1 += 1000
+        monsterxcord1 += 10000
+        monsterycord1 += 10000
         monstersdead += 1
         if level == 6:
-            endmessage = font.render(("GG! You won!"),True,black)
-            screen.blit(endmessage, (400, 300))
+            level = 7
 
     if monsterhealth2 <= 0:
-        monsterxcord2 += 1000
-        monsterycord2 += 1000
+        monsterxcord2 += 10000
+        monsterycord2 += 10000
         monstersdead += 1
 
     if monsterhealth3 <= 0:
-        monsterxcord3 += 1000
-        monsterycord3 += 1000
+        monsterxcord3 += 10000
+        monsterycord3 += 10000
         monstersdead += 1
+    
+    if level >= 6:
+        princess(princessxcord, princessycord)
     
     if plyrhealth <= 0:
         deathmessage = font.render(("You Lose!"),True,black)
@@ -359,12 +359,14 @@ while active:
 
     show_health(healthx, healthy)
     show_level(levelx, levely)
+    show_story()
         
     player(plyrxcord,plyrycord)
     monster(monsteravatar1, monsterxcord1, monsterycord1)
     monster(monsteravatar2, monsterxcord2, monsterycord2)
     monster(monsteravatar3, monsterxcord3, monsterycord3)
     
+    #New Level
     if monstersdead == 3:
         portal(portalxcord, portalycord)
         if portalcollision == True:
@@ -372,14 +374,14 @@ while active:
             plyrycord = 300
             plyrmaxhealth += 10
             plyrhealth += 10
-            plyrattack += random.randint(1,5)
+            plyrattack += random.choice(randomlist(1,5))
             level += 1
-            totalmonstersdead += monstersdead
             
-            if level == 7:    
+            if level == 8:    
                 pygame.display.quit()
                 active = False
                 quit()
+                
             healthpotionxcord = random.choice(randomlist(200, 700))
             healthpotionycord = random.choice(randomlist(100, 500))
 
@@ -412,4 +414,4 @@ while active:
     pygame.display.update()
     if plyrhealth > plyrmaxhealth:
         plyrhealth = plyrmaxhealth
-       
+        
