@@ -38,6 +38,9 @@ def collided (x1, y1, x2, y2):
     else:
         return False
 
+level = 1
+monstersdead = 0
+
 #Monsters dictionary
 monsterstats_file = open('monsterstats.csv')
 monsterstats_text = monsterstats_file.read()
@@ -221,9 +224,6 @@ princessycord = 300
 
 def princess(x,y):
     screen.blit(princessavatar, (x,y))
-
-level = 1
-monstersdead = 0
 
 #Game Loop
 active = True
