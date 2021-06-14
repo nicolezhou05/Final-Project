@@ -2,23 +2,23 @@ body {
   background-color: #2B2D42;
 }
 
+.sub {
+  color: #EDF2F4;
+}
+
 h1 {
-  font-family: fantasy;
+  color: #EF233C;
 }
 
-h3 {
-  text-decoration: underline;
-}
 
-h1,
-h2,
 h3 {
-  color: #D80032;
+  color: #EF233C;
+  font-size: 20px;
 }
 
 p,
 li {
-  color: #EF233C;
+  color: #EDF2F4;
 }
 
 ul {
@@ -26,5 +26,10 @@ ul {
 }
 
 a {
-  color: #EF233C;
+  color: #abb4c3;
 }
+
+hr {
+  color: #D80032
+}
+
